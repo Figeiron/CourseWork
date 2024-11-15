@@ -19,6 +19,20 @@ ext {
 }
 
 
+task serverJar(type: Jar) {
+    archiveBaseName = 'chat-server'
+    from sourceSets.main.output
+    include 'org/server/coursework/ServerMain.class'
+}
+
+task clientJar(type: Jar) {
+    archiveBaseName = 'chat-client'
+    from sourceSets.main.output
+    include 'org/client/coursework/ClientMain.class'
+}
+
+
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
