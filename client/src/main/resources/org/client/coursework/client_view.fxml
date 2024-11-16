@@ -10,7 +10,7 @@
     <TextField fx:id="portField" promptText="Enter Port" />
     <Button text="Connect" fx:id="connectButton" onAction="#handleConnectButtonAction"/>
     <Button text="close" fx:id="closeButton" onAction="#closeConnection"/>
-    <TextArea fx:id="chatBox" editable="false" prefHeight="200"/>
-    <TextArea fx:id="chatMessage" prefHeight="200"/>
+    <TextArea fx:id="chatBox" editable="false" prefHeight="1000"/>
+    <TextArea fx:id="chatMessage" prefHeight="20"/>
     <Button text="Send" onAction="#handleSendButtonAction"/>
 </VBox>

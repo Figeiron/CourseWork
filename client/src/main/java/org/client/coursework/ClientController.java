@@ -32,6 +32,16 @@ public class ClientController {
 
     @FXML
     public void initialize() {
+        closeButton.setDisable(true);
+        connectButton.setDisable(false);
+        chatMessage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().toString().equals("ENTER") && !event.isControlDown()) {
+                event.consume();
+                handleSendButtonAction();
+            } else if (event.getCode().toString().equals("ENTER") && event.isControlDown()) {
+                chatMessage.appendText("\n");
+            }
+        });
     }
 
     @FXML
@@ -54,26 +64,28 @@ public class ClientController {
 
     private void connectToServer(String url) {
         chatBox.appendText("Connecting to: " + url + "\n");
-        webSocketClient = new ChatClient(chatBox, url);
+        webSocketClient = new ChatClient(chatBox,connectButton,closeButton, url);
         webSocketClient.connect();
+        closeButton.setDisable(false);
+        connectButton.setDisable(true);
     }
 
     @FXML
     public void handleSendButtonAction() {
         String message = chatMessage.getText();
-        if (message != null && !message.isEmpty()) {
-            System.out.println(message);
-            webSocketClient.sendMessage(message);
-            chatMessage.clear();
+        if (message != null && !message.isEmpty() && webSocketClient != null) {
+            if(webSocketClient.isOpen()){
+                try {
+                    webSocketClient.sendMessage(message.trim());
+                } catch (Exception e) {
+                    chatBox.appendText("error: " + e.getMessage());
+                }
+                chatMessage.clear();
+            }
         }
     }
 
-    @FXML
-    public void handleKeyPress(KeyEvent event) {
-        if (event.getCode().toString().equals("ENTER")) {
-            handleSendButtonAction();
-        }
-    }
+
 
     public void closeConnection() {
         if (webSocketClient != null) {

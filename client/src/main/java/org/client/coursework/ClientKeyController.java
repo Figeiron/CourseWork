@@ -17,5 +17,8 @@ public class ClientKeyController implements EventHandler<KeyEvent> {
         if (event.getCode().toString().equals("F11")) {
             stage.setFullScreen(!stage.isFullScreen());
         }
+        if (event.getCode().toString().equals("ENTER")) {
+
+        }
     }
 }
