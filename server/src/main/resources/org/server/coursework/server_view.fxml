@@ -7,7 +7,7 @@
       fx:controller="org.server.coursework.ServerController"
       spacing="10" alignment="CENTER">
     <Label text="Chat Server" style="-fx-font-size: 16px;"/>
-    <Label fx:id="statusLabel" text="Status: Stopped"/>
+    <TextArea fx:id="statusLabel" editable="false" text="Status: Stopped"/>
     <HBox spacing="10">
         <Button fx:id="startButton" text="Start Server" onAction="#onStartButtonClick"/>
         <Button fx:id="stopButton" text="Stop Server" onAction="#onStopButtonClick"/>

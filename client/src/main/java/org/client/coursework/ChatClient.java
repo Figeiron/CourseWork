@@ -1,6 +1,7 @@
 package org.client.coursework;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -8,10 +9,11 @@ import java.net.URI;
 
 public class ChatClient extends WebSocketClient {
 
+    public int errors = 0;
     private TextArea chatBox;
 
-    public ChatClient(TextArea chatBox) {
-        super(URI.create("ws://localhost:8080"));
+    public ChatClient(TextArea chatBox, String url) {
+        super(URI.create(url));
         this.chatBox = chatBox;
     }
 
@@ -34,6 +36,7 @@ public class ChatClient extends WebSocketClient {
     public void onError(Exception ex) {
         ex.printStackTrace();
         Platform.runLater(() -> chatBox.appendText("Error: " + ex.getMessage() + "\n"));
+        errors ++;
     }
 
     public void sendMessage(String message) {

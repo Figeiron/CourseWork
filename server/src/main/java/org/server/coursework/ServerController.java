@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class ServerController {
 
     @FXML
@@ -18,7 +21,7 @@ public class ServerController {
     private TextArea logArea;
 
     @FXML
-    private Label statusLabel;
+    private TextArea statusLabel;
 
     private ChatServer chatServer;
 
@@ -29,10 +32,11 @@ public class ServerController {
     }
 
     @FXML
-    protected void onStartButtonClick() {
+    protected void onStartButtonClick() throws UnknownHostException {
         chatServer = new ChatServer(8080, this::logMessage);
+        InetAddress inetAddress = InetAddress.getLocalHost();
         new Thread(chatServer::start).start();
-        statusLabel.setText("Server running on port 8080");
+        statusLabel.setText("Server running on " + inetAddress.getHostAddress() +":8080");
         startButton.setDisable(true);
         stopButton.setDisable(false);
     }

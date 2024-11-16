@@ -2,9 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.client.coursework.ClientController" spacing="10">
-    <TextArea fx:id="chatBox" prefHeight="400.0" prefWidth="400.0" editable="false" />
-    <Button text="Send" onAction="#handleSendButtonAction" />
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.coursework.ClientController">
+    <TextField fx:id="ipField" promptText="Enter IP Address" />
+    <TextField fx:id="portField" promptText="Enter Port" />
+    <Button text="Connect" fx:id="connectButton" onAction="#handleConnectButtonAction"/>
+    <Button text="close" fx:id="closeButton" onAction="#closeConnection"/>
+    <TextArea fx:id="chatBox" editable="false" prefHeight="200"/>
+    <TextArea fx:id="chatMessage" prefHeight="200"/>
+    <Button text="Send" onAction="#handleSendButtonAction"/>
 </VBox>
