@@ -36,6 +36,10 @@ subprojects {
         implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
             exclude(group: 'org.openjfx')
         }
+        implementation 'org.slf4j:slf4j-api:2.0.0'
+        implementation 'ch.qos.logback:logback-classic:1.2.11'
+        implementation 'ch.qos.logback:logback-core:1.2.11'
+
         implementation('net.synedra:validatorfx:0.4.0') {
             exclude(group: 'org.openjfx')
         }
@@ -44,6 +48,7 @@ subprojects {
         implementation('eu.hansolo:tilesfx:11.48') {
             exclude(group: 'org.openjfx')
         }
+
         implementation('com.github.almasb:fxgl:17.3') {
             exclude(group: 'org.openjfx')
             exclude(group: 'org.jetbrains.kotlin')

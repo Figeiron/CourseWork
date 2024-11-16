@@ -3,6 +3,8 @@ module org.client.coursework {
     requires javafx.fxml;
     requires javafx.web;
 
+    requires ch.qos.logback.classic;
+    requires ch.qos.logback.core;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -11,6 +13,7 @@ module org.client.coursework {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires kotlin.stdlib;
+    requires Java.WebSocket;
 
     opens org.client.coursework to javafx.fxml;
     exports org.client.coursework;
