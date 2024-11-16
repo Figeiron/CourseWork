@@ -1,14 +1,14 @@
-package org.server.coursework;
+package org.client.coursework;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ClientController {
     @FXML
     private Label welcomeText;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText("Welcome to client");
     }
 }

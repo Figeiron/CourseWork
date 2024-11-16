@@ -4,7 +4,7 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
-    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
 }
 
 group 'org.server'
@@ -18,28 +18,45 @@ ext {
     junitVersion = '5.10.0'
 }
 
-
-task serverJar(type: Jar) {
-    archiveBaseName = 'chat-server'
-    from sourceSets.main.output
-    include 'org/server/coursework/ServerMain.class'
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
-task clientJar(type: Jar) {
-    archiveBaseName = 'chat-client'
-    from sourceSets.main.output
-    include 'org/client/coursework/ClientMain.class'
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
+    apply plugin: 'org.javamodularity.moduleplugin'
+    apply plugin: 'org.openjfx.javafxplugin'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
 
+    dependencies {
+        implementation('org.controlsfx:controlsfx:11.1.2')
+        implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
+            exclude(group: 'org.openjfx')
+        }
+        implementation('net.synedra:validatorfx:0.4.0') {
+            exclude(group: 'org.openjfx')
+        }
+        implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
+        implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+        implementation('eu.hansolo:tilesfx:11.48') {
+            exclude(group: 'org.openjfx')
+        }
+        implementation('com.github.almasb:fxgl:17.3') {
+            exclude(group: 'org.openjfx')
+            exclude(group: 'org.jetbrains.kotlin')
+        }
 
+        testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-application {
-    mainModule = 'org.server.coursework'
-    mainClass = 'org.server.coursework.HelloApplication'
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
 }
 
 javafx {
