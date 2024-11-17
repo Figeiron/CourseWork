@@ -5,8 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 
 public class ClientController {
 
@@ -28,12 +26,19 @@ public class ClientController {
     @FXML
     private Button connectButton;
 
+    @FXML
+    private Button usernameButton;
+
+    @FXML
+    private TextField usernameField;
+
     private ChatClient webSocketClient;
 
     @FXML
     public void initialize() {
         closeButton.setDisable(true);
         connectButton.setDisable(false);
+        usernameButton.setDisable(true);
         chatMessage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().toString().equals("ENTER") && !event.isControlDown()) {
                 event.consume();
@@ -64,10 +69,11 @@ public class ClientController {
 
     private void connectToServer(String url) {
         chatBox.appendText("Connecting to: " + url + "\n");
-        webSocketClient = new ChatClient(chatBox,connectButton,closeButton, url);
+        webSocketClient = new ChatClient(chatBox,connectButton,closeButton,usernameButton, url);
         webSocketClient.connect();
         closeButton.setDisable(false);
         connectButton.setDisable(true);
+        usernameButton.setDisable(false);
     }
 
     @FXML
@@ -77,6 +83,22 @@ public class ClientController {
             if(webSocketClient.isOpen()){
                 try {
                     webSocketClient.sendMessage(message.trim());
+                } catch (Exception e) {
+                    chatBox.appendText("error: " + e.getMessage());
+                }
+                chatMessage.clear();
+            }
+        }
+    }
+
+
+    @FXML
+    public void handleSendUsernameButtonAction() {
+        String username = usernameField.getText();
+        if (username != null && !username.isEmpty() && webSocketClient != null) {
+            if(webSocketClient.isOpen()){
+                try {
+                    webSocketClient.sendServiceMessage(username.trim());
                 } catch (Exception e) {
                     chatBox.appendText("error: " + e.getMessage());
                 }

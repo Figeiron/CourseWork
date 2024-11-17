@@ -12,6 +12,7 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+server/src/main/resources/org/server/coursework/database/data.db
 
 ### Eclipse ###
 .apt_generated

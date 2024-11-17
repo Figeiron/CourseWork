@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.coursework.ClientController">
-    <TextField fx:id="ipField" promptText="Enter IP Address" />
-    <TextField fx:id="portField" promptText="Enter Port" />
-    <Button text="Connect" fx:id="connectButton" onAction="#handleConnectButtonAction"/>
-    <Button text="close" fx:id="closeButton" onAction="#closeConnection"/>
+    <HBox>
+        <TextField fx:id="ipField" promptText="Enter IP Address" text="192.168.0.152"/>
+        <Label text=" : " style="-fx-font-size: 16px;" minWidth="15"/>
+        <TextField fx:id="portField" promptText="Enter Port" maxWidth="80" text="8080"/>
+    </HBox>
+    <HBox>
+        <Button text="Connect" fx:id="connectButton" onAction="#handleConnectButtonAction"/>
+        <Button text="close" fx:id="closeButton" onAction="#closeConnection"/>
+    </HBox>
+    <HBox>
+        <TextField fx:id="usernameField" promptText="Enter username"/>
+        <Button text="Accept" fx:id="usernameButton" onAction="#handleSendUsernameButtonAction"/>
+    </HBox>
     <TextArea fx:id="chatBox" editable="false" prefHeight="1000"/>
-    <TextArea fx:id="chatMessage" prefHeight="20"/>
-    <Button text="Send" onAction="#handleSendButtonAction"/>
+    <HBox>
+        <TextArea fx:id="chatMessage" prefHeight="20"/>
+        <Button text="Send" onAction="#handleSendButtonAction" minWidth="50"/>
+    </HBox>
 </VBox>

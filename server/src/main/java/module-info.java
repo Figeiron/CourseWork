@@ -14,6 +14,8 @@ module org.server.coursework {
     requires com.almasb.fxgl.all;
     requires kotlin.stdlib;
     requires Java.WebSocket;
+    requires com.fasterxml.jackson.databind;
+    requires java.sql;
 
     opens org.server.coursework to javafx.fxml;
     exports org.server.coursework;

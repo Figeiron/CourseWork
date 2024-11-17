@@ -13,9 +13,10 @@ public class ClientMain extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(ClientMain.class.getResource("client_view.fxml"));
         ClientKeyController ClientKeyController = new ClientKeyController(stage);
 
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 270, 240);
         scene.setOnKeyPressed(ClientKeyController);
-
+        stage.setMinHeight(240);
+        stage.setMinWidth(270);
         stage.setTitle("Chat!");
         stage.setScene(scene);
         stage.show();
