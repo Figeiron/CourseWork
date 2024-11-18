@@ -30,7 +30,12 @@ public class ChatServer extends WebSocketServer {
         clients.add(conn);
         dbController.connect();
         dbController.addUserByIp(conn.getRemoteSocketAddress().getAddress().toString());
+        String username = dbController.getUsernameByIp(conn.getRemoteSocketAddress().getAddress().toString());
         dbController.closeConnection();
+        if (!Objects.equals(username, "none")){
+            conn.send("{\"service_message\":\""+ username +"\"}");
+        }
+
 
     }
 
@@ -55,8 +60,8 @@ public class ChatServer extends WebSocketServer {
                 if (!Objects.equals(sender_username, "none")){
                     json_message.setSender(sender_username);
                 }
-//              broadcast(json_message.toJson());
-                broadcastExceptSender(conn, json_message.toJson());
+                broadcast(json_message.toJson());
+//                broadcastExceptSender(conn, json_message.toJson());
                 logger.accept("Message from: " + json_message.getSender() + " -> " + json_message.getMessage());
             } else if (rootNode.has("service_message")) {
                 String username = rootNode.path("service_message").asText();

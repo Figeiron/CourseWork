@@ -1,10 +1,12 @@
 package org.client.coursework;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import kotlin.random.PlatformRandomKt;
 
 public class ClientController {
 
@@ -36,15 +38,17 @@ public class ClientController {
 
     @FXML
     public void initialize() {
-        closeButton.setDisable(true);
-        connectButton.setDisable(false);
-        usernameButton.setDisable(true);
+        Platform.runLater(() -> {
+            closeButton.setDisable(true);
+            connectButton.setDisable(false);
+            usernameButton.setDisable(true);
+        });
         chatMessage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().toString().equals("ENTER") && !event.isControlDown()) {
                 event.consume();
                 handleSendButtonAction();
             } else if (event.getCode().toString().equals("ENTER") && event.isControlDown()) {
-                chatMessage.appendText("\n");
+                Platform.runLater(() -> chatMessage.appendText("\n"));
             }
         });
     }
@@ -60,33 +64,35 @@ public class ClientController {
                 String url = "ws://" + ipAddress + ":" + portNumber;
                 connectToServer(url);
             } catch (NumberFormatException e) {
-                chatBox.appendText("Invalid port number.\n");
+                Platform.runLater(() -> chatBox.appendText("Invalid port number.\n"));
             }
         } else {
-            chatBox.appendText("Please enter both IP address and port.\n");
+            Platform.runLater(() -> chatBox.appendText("Please enter both IP address and port.\n"));
         }
     }
 
     private void connectToServer(String url) {
-        chatBox.appendText("Connecting to: " + url + "\n");
-        webSocketClient = new ChatClient(chatBox,connectButton,closeButton,usernameButton, url);
+        webSocketClient = new ChatClient(chatBox, connectButton, closeButton, usernameButton, usernameField, url);
         webSocketClient.connect();
-        closeButton.setDisable(false);
-        connectButton.setDisable(true);
-        usernameButton.setDisable(false);
+        Platform.runLater(() -> {
+            chatBox.appendText("Connecting to: " + url + "\n");
+            closeButton.setDisable(false);
+            connectButton.setDisable(true);
+            usernameButton.setDisable(false);
+        });
     }
 
     @FXML
     public void handleSendButtonAction() {
         String message = chatMessage.getText();
         if (message != null && !message.isEmpty() && webSocketClient != null) {
-            if(webSocketClient.isOpen()){
+            if (webSocketClient.isOpen()) {
                 try {
                     webSocketClient.sendMessage(message.trim());
                 } catch (Exception e) {
-                    chatBox.appendText("error: " + e.getMessage());
+                    Platform.runLater(()->chatBox.appendText("error: " + e.getMessage()));
                 }
-                chatMessage.clear();
+                Platform.runLater(()->chatMessage.clear());
             }
         }
     }
@@ -96,17 +102,16 @@ public class ClientController {
     public void handleSendUsernameButtonAction() {
         String username = usernameField.getText();
         if (username != null && !username.isEmpty() && webSocketClient != null) {
-            if(webSocketClient.isOpen()){
+            if (webSocketClient.isOpen()) {
                 try {
                     webSocketClient.sendServiceMessage(username.trim());
                 } catch (Exception e) {
-                    chatBox.appendText("error: " + e.getMessage());
+                    Platform.runLater(()->chatBox.appendText("error: " + e.getMessage()));
                 }
-                chatMessage.clear();
+                Platform.runLater(()->chatMessage.clear());
             }
         }
     }
-
 
 
     public void closeConnection() {

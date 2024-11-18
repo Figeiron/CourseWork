@@ -3,6 +3,7 @@ package org.server.coursework;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class MessageBuilder {
     private static int idCounter;
@@ -13,7 +14,7 @@ public class MessageBuilder {
     @JsonProperty("sender")
     private String sender;
 
-    @JsonProperty("message")
+    @JsonProperty("client_message")
     private String message;
 
 
@@ -51,6 +52,15 @@ public class MessageBuilder {
 
     public String toJson() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(this);
+        ObjectNode root = objectMapper.createObjectNode();
+        ObjectNode messageNode = objectMapper.createObjectNode();
+
+        messageNode.put("id", id);
+        messageNode.put("sender", sender);
+        messageNode.put("client_message", message);
+
+        root.set("message", messageNode);
+        System.out.println(objectMapper.writeValueAsString(root));
+        return objectMapper.writeValueAsString(root);
     }
 }

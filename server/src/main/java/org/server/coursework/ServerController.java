@@ -26,8 +26,10 @@ public class ServerController {
 
     @FXML
     public void initialize() {
-        statusLabel.setText("Server stopped");
-        stopButton.setDisable(true);
+        Platform.runLater(() -> {
+            statusLabel.setText("Server stopped");
+            stopButton.setDisable(true);
+        });
     }
 
     @FXML
@@ -35,18 +37,22 @@ public class ServerController {
         chatServer = new ChatServer(8080, this::logMessage);
         InetAddress inetAddress = InetAddress.getLocalHost();
         new Thread(chatServer::start).start();
-        statusLabel.setText("Server running on " + inetAddress.getHostAddress() +":8080");
-        startButton.setDisable(true);
-        stopButton.setDisable(false);
+        Platform.runLater(() -> {
+            statusLabel.setText("Server running on " + inetAddress.getHostAddress() + ":8080");
+            startButton.setDisable(true);
+            stopButton.setDisable(false);
+        });
     }
 
     @FXML
     protected void onStopButtonClick() {
         if (chatServer != null) {
             chatServer.stopServer();
-            statusLabel.setText("Server stopped");
-            startButton.setDisable(false);
-            stopButton.setDisable(true);
+            Platform.runLater(() -> {
+                statusLabel.setText("Server stopped");
+                startButton.setDisable(false);
+                stopButton.setDisable(true);
+            });
         }
     }
 
