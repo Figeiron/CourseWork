@@ -11,7 +11,7 @@ public class DataBaseController {
         try {
             connection = DriverManager.getConnection(URL);
         } catch (SQLException e) {
-            System.err.println("Не вдалося підключитися до бази даних: " + e.getMessage());
+            System.err.println("Failed to connect to database:" + e.getMessage());
         }
     }
 
@@ -21,7 +21,7 @@ public class DataBaseController {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.err.println("Не вдалося закрити з'єднання: " + e.getMessage());
+            System.err.println("Failed to close connection:" + e.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public class DataBaseController {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Помилка при створенні таблиці: " + e.getMessage());
+            System.err.println("Error when creating the table:" + e.getMessage());
         }
     }
 
@@ -45,21 +45,18 @@ public class DataBaseController {
             checkStmt.setString(1, ip);
             ResultSet rs = checkStmt.executeQuery();
 
-            if (rs.next() && rs.getInt(1) > 0) {
-                System.out.println("User with IP " + ip + "already exists");
-            } else {
+            if (!(rs.next() && rs.getInt(1) > 0)) {
                 String insertSql = "INSERT INTO users (ip, username) VALUES (?, ?)";
                 try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
                     insertStmt.setString(1, ip);
                     insertStmt.setString(2, "none");
                     insertStmt.executeUpdate();
-                    System.out.println("Користувач з IP " + ip + " доданий з ім'ям 'none'.");
                 } catch (SQLException e) {
-                    System.err.println("Помилка при додаванні користувача: " + e.getMessage());
+                    System.err.println("Error adding user:" + e.getMessage());
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Помилка при перевірці наявності користувача: " + e.getMessage());
+            System.err.println("Error checking user availability:" + e.getMessage());
         }
     }
 
@@ -75,7 +72,7 @@ public class DataBaseController {
                 return null;
             }
         } catch (SQLException e) {
-            System.err.println("Помилка при отриманні користувача за IP: " + e.getMessage());
+            System.err.println("Error getting user by IP:" + e.getMessage());
             return null;
         }
     }
@@ -85,15 +82,9 @@ public class DataBaseController {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, newUsername);
             stmt.setString(2, ip);
-            int rowsUpdated = stmt.executeUpdate();
 
-            if (rowsUpdated > 0) {
-                System.out.println("Ім'я користувача успішно оновлено!");
-            } else {
-                System.out.println("Не знайдено користувача для оновлення.");
-            }
         } catch (SQLException e) {
-            System.err.println("Помилка при оновленні імені користувача за IP: " + e.getMessage());
+            System.err.println("Error updating username by IP:" + e.getMessage());
         }
     }
 }
