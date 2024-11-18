@@ -44,10 +44,10 @@ public class ClientController {
             usernameButton.setDisable(true);
         });
         chatMessage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode().toString().equals("ENTER") && !event.isControlDown()) {
+            if (event.getCode().toString().equals("ENTER") && !event.isShiftDown()) {
                 event.consume();
                 handleSendButtonAction();
-            } else if (event.getCode().toString().equals("ENTER") && event.isControlDown()) {
+            } else if (event.getCode().toString().equals("ENTER") && event.isShiftDown()) {
                 Platform.runLater(() -> chatMessage.appendText("\n"));
             }
         });
@@ -76,9 +76,8 @@ public class ClientController {
         webSocketClient.connect();
         Platform.runLater(() -> {
             chatBox.appendText("Connecting to: " + url + "\n");
-            closeButton.setDisable(false);
+            closeButton.setDisable(true);
             connectButton.setDisable(true);
-            usernameButton.setDisable(false);
         });
     }
 

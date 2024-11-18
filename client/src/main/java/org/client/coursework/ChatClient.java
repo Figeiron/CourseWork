@@ -11,6 +11,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.Map;
 
 public class ChatClient extends WebSocketClient {
 
@@ -92,8 +93,15 @@ public class ChatClient extends WebSocketClient {
 
     public void sendMessage(String message) {
         if (this.isOpen()) {
-            send("{\"message\": \"" + message + "\"}");
-            Platform.runLater(() -> chatBox.appendText("You: " + message + "\n"));
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonMessage = objectMapper.writeValueAsString(Map.of("message", message));
+                send(jsonMessage);
+
+                Platform.runLater(() -> chatBox.appendText("You: " + message + "\n"));
+            } catch (Exception e) {
+                Platform.runLater(() -> chatBox.appendText("Error sending message.\n"));
+            }
         }
     }
 
