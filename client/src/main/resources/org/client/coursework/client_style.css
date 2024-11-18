@@ -1,0 +1,54 @@
+.root {
+    -fx-spacing: 10;
+    -fx-padding: 20;
+    -fx-background-color: #f7f7f7;
+    -fx-border-color: #333333;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #555555;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-prompt-text-fill: #888888;
+    -fx-font-size: 13px;
+    -fx-text-fill: #000000;
+}
+
+.button {
+    -fx-background-color: #555555;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #333333;
+}
+
+.button:pressed {
+    -fx-background-color: #111111;
+}
+
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #555555;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 13px;
+    -fx-text-fill: #000000;
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}

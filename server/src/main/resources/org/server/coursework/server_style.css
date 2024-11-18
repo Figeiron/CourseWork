@@ -1,0 +1,74 @@
+.root {
+    -fx-spacing: 10;
+    -fx-padding: 20;
+    -fx-background-color: #f7f7f7;
+    -fx-border-color: #333333;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #555555;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 13px;
+    -fx-text-fill: #000000;
+    -fx-control-inner-background: #ffffff;
+}
+
+.hbox {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.button {
+    -fx-background-color: #555555;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #333333;
+}
+
+.button:pressed {
+    -fx-background-color: #111111;
+}
+
+#startButton {
+    -fx-background-color: #4caf50;
+}
+
+#startButton:hover {
+    -fx-background-color: #388e3c;
+}
+
+#startButton:pressed {
+    -fx-background-color: #2e7d32;
+}
+
+#stopButton {
+    -fx-background-color: #f44336;
+}
+
+#stopButton:hover {
+    -fx-background-color: #d32f2f;
+}
+
+#stopButton:pressed {
+    -fx-background-color: #b71c1c;
+}
