@@ -60,7 +60,6 @@ public class MessageBuilder {
         messageNode.put("client_message", message);
 
         root.set("message", messageNode);
-        System.out.println(objectMapper.writeValueAsString(root));
         return objectMapper.writeValueAsString(root);
     }
 }
