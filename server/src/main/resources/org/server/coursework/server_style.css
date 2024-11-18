@@ -3,8 +3,8 @@
     -fx-padding: 20;
     -fx-background-color: #f7f7f7;
     -fx-border-color: #333333;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-radius: 25 25 0 0;
 }
 
 .label {
