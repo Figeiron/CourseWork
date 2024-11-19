@@ -5,6 +5,7 @@ import java.sql.*;
 public class DataBaseController {
 
     private static final String URL = "jdbc:sqlite:src/main/resources/org/server/coursework/database/data.db";
+    //Build parameter private static final String URL = "jdbc:sqlite:data.db";
     private Connection connection;
 
     public void connect() {

@@ -25,3 +25,9 @@ task serverJar(type: Jar) {
     from sourceSets.main.output
     include 'org/server/coursework/ServerMain.class'
 }
+
+tasks.distZip {
+    from('src/main/resources/org/server/coursework/database/data.db') {
+        into('server/bin')
+    }
+}
