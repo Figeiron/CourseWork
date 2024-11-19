@@ -45,7 +45,7 @@ public class DataBaseController {
             checkStmt.setString(1, ip);
             ResultSet rs = checkStmt.executeQuery();
 
-            if (!(rs.next() && rs.getInt(1) > 0)) {
+            if ((!rs.next() || rs.getInt(1) <= 0)) {
                 String insertSql = "INSERT INTO users (ip, username) VALUES (?, ?)";
                 try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
                     insertStmt.setString(1, ip);
@@ -54,6 +54,7 @@ public class DataBaseController {
                 } catch (SQLException e) {
                     System.err.println("Error adding user:" + e.getMessage());
                 }
+
             }
         } catch (SQLException e) {
             System.err.println("Error checking user availability:" + e.getMessage());
@@ -82,6 +83,7 @@ public class DataBaseController {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, newUsername);
             stmt.setString(2, ip);
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("Error updating username by IP:" + e.getMessage());
